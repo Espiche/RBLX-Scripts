@@ -1,0 +1,180 @@
+
+getgenv().autowinning = false
+getgenv().autokilling = false
+
+local function kill()
+    local humanoid = Game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function autokill()
+	while getgenv().autokilling == true do
+			kill()
+			wait()
+game:GetService("ReplicatedStorage").Remotes.Game.Respawn:FireServer()
+wait(.4)
+		end
+	end
+
+
+
+local function autowin()
+    while getgenv().autowinning == true do
+            game:GetService("ReplicatedStorage").Remotes.Game.Win:FireServer()
+            wait(.001)
+    end
+end
+
+local function fixautofarm()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(80,616,-22)
+end
+
+----------------
+
+local function moretime()
+game:GetService("ReplicatedStorage").Remotes.Shop:FindFirstChild("+Time"):FireServer()
+end
+
+local function fasttimer()
+game:GetService("ReplicatedStorage").Remotes.Shop:FindFirstChild("Fast Timer"):FireServer()
+end
+
+local function fov()
+game:GetService("ReplicatedStorage").Remotes.Shop.FOV:FireServer()
+end
+
+local function darkness()
+game:GetService("ReplicatedStorage").Remotes.Shop.Darkness:FireServer()
+end
+
+local function smallbody()
+game:GetService("ReplicatedStorage").Remotes.Shop:FindFirstChild("Small Body"):FireServer()
+end
+
+local function freeze()
+game:GetService("ReplicatedStorage").Remotes.Shop.Freeze:FireServer() 
+end
+
+-----------------------------------------------
+
+
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local MainWindow = OrionLib:MakeWindow({Name = "Fall of Hell ", HidePremium = false, SaveConfig = true, IntroEnabled = false, ConfigFolder = "mainconfig"})
+
+
+
+local ShopTab = MainWindow:MakeTab({
+	Name = "SHOP",
+	Icon = "rbxassetid://11347112419",
+	PremiumOnly = false
+})
+
+ShopTab:AddLabel("Click on an effect to use it instantly.")
+
+ShopTab:AddButton({
+	Name = "+60s Time",
+	Callback = function()
+      	moretime()
+  	end    
+})
+
+ShopTab:AddButton({
+	Name = "Fast Timer",
+	Callback = function()
+      	fasttimer()
+  	end    
+})
+
+ShopTab:AddButton({
+	Name = "FOV",
+	Callback = function()
+      	fov()
+  	end    
+})
+
+ShopTab:AddButton({
+	Name = "Darkness",
+	Callback = function()
+      	darkness()
+  	end    
+})
+
+ShopTab:AddButton({
+	Name = "Small Body",
+	Callback = function()
+      	smallbody()
+  	end    
+})
+
+ShopTab:AddButton({
+	Name = "Freeze",
+	Callback = function()
+      	freeze() 
+  	end    
+}) 
+
+--------------------------------------------
+
+local autofarmtab = MainWindow:MakeTab({
+	Name = "Autofarm",
+	Icon = "rbxassetid://11347112419",
+	PremiumOnly = false
+})
+
+autofarmtab:AddParagraph("[NOTE]","If the win autofarm does not work, click the button below.")
+
+autofarmtab:AddButton({
+	Name = "Fix win autofarm",
+	Callback = function()
+      	fixautofarm() 
+          OrionLib:MakeNotification({
+            Name = "[FIXING THE AUTOFARM]",
+            Content = "Avoid moving at all during this process, if you moved press the button again.",
+            Time = 10
+        })
+        
+  	end    
+}) 
+
+autofarmtab:AddToggle({
+	Name = "Autofarm wins (money & skill points included)",
+	Default = false,
+	Callback = function(value)
+		getgenv().autowinning = value
+		autowin()
+	end    
+})
+
+autofarmtab:AddToggle({
+	Name = "Autofarm deaths (get in death leaderboards quick)",
+	Default = false,
+	Callback = function(value)
+		getgenv().autokilling = value
+		autokill()
+	end    
+})
+
+
+---------
+
+local othertab = MainWindow:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://11347112419",
+	PremiumOnly = false
+})
+
+othertab:AddParagraph("Note from developer","dont ruin other peoples experiences, use vip servers to farm; they're free after all.")
+
+othertab:AddButton({
+	Name = "Uninject",
+	Callback = function()
+		OrionLib:Destroy()
+
+  	end    
+})
+
+
+OrionLib:Init()
