@@ -14,7 +14,7 @@ local function autokill()
 			kill()
 			wait()
 game:GetService("ReplicatedStorage").Remotes.Game.Respawn:FireServer()
-wait(.4)
+wait(.5)
 		end
 	end
 
