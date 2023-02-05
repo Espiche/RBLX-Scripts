@@ -12,7 +12,7 @@ end
 local function autokill()
 	while getgenv().autokilling == true do
 			kill()
-			wait()
+			wait(.1)
 game:GetService("ReplicatedStorage").Remotes.Game.Respawn:FireServer()
 wait(.5)
 		end
